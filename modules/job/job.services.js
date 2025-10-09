@@ -7,7 +7,7 @@ import Job from "./job.model.js";
 
 // Create new job
 const createJobService = async (payload, userId,files) => {
-  console.log(files);
+   
   const uploadResults = await Promise.all(
      files.map(file => uploadBufferToCloudinary(file.buffer, "photos"))
   );

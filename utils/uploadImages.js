@@ -5,7 +5,7 @@ import cloudinary from '../config/cloudinary.config.js';
 export const uploadBufferToCloudinary = (buffer, folder = "uploads") => {
   return new Promise((resolve, reject) => {
     const stream = cloudinary.uploader.upload_stream(
-      { folder },
+      { folder, resource_type : "auto" },
       (error, result) => {
         if (error) reject(error);
         else resolve(result);
