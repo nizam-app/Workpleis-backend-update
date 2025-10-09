@@ -6,6 +6,7 @@ import offerRouter from "../modules/offer/offer.router.js";
 import reviewRouter from "../modules/review/review.router.js";
 import deliveryRouter from "../modules/delivery/delivery.router.js";
 import specialRouter from "../modules/special/special.router.js";
+import proposalRouter from "../modules/proposal/proposal.router.js";
 
 export const router  = Router();
 
@@ -34,6 +35,10 @@ const routes = [
     {
         path : '/special-projects',
         route : specialRouter
+    },
+    {
+        path : '/proposals',
+        route : proposalRouter
     },
     {
         path : '/delivery',

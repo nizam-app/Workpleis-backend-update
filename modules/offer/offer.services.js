@@ -10,7 +10,7 @@ const createOfferService = async (jobId, serviceProviderId, payload) => {
 
   // Allow offers only when task status is 'open'
   if (job.status !== "Open") {
-    throw new AppError(400, `You cannot send an offer. Job status is currently '${task.status}'.`);
+    throw new AppError(400, `You cannot send an offer. Job status is currently '${job.status}'.`);
   }
 
   const offer = await Offer.create({
