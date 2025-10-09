@@ -4,11 +4,13 @@ import { Schema, model } from "mongoose";
 const specialSchema = new Schema({
     title: {
         type: String,
-        required: [true, 'Title is required']
+        required: [true, 'Title is required'],
+        trim : true
     },
     category: {
         type: String,
-        required: [true, 'Category is required']
+        required: [true, 'Category is required'],
+        trim : true
     },
     description: {
         type: String
@@ -16,7 +18,8 @@ const specialSchema = new Schema({
     urgency: {
         type: String,
         enum: ["Immediate", "1-2 weeks", "Flexible"],
-        required: [true, 'Category is required']
+        required: [true, 'Category is required'],
+        trim : true
     },
     nda: {
         type: Boolean,
@@ -24,27 +27,32 @@ const specialSchema = new Schema({
     },
     budgetRange: {
         type: String,
-        required: [true, 'Budget is required']
+        required: [true, 'Budget is required'],
+        trim : true
     },
     photos: {
         type: [String]
     },
     name: {
         type: String,
-        required: [true, 'Name is required']
+        required: [true, 'Name is required'],
+        trim : true
     },
     role: {
         type: String,
-        required: [true, 'Role is required']
+        required: [true, 'Role is required'],
+        trim : true
     },
     prefferredCommunication: {
         type: String,
         enum: ["Email", "Phone", "In_app"],
-        default: "In_app"
+        default: "In_app",
+        trim : true
     },
     contactTime: {
         type: String,
-        enum: ["Morning", "Afternoon", "Evening"]
+        enum: ["Morning", "Afternoon", "Evening"],
+        trim : true
     },
     createdBy: {
         type: Schema.Types.ObjectId,

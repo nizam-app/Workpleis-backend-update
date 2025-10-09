@@ -36,7 +36,7 @@ const getAllSpecialsController = asyncHandler(async (req, res) => {
 // Get special project details
 const getSpecialDetailsController = asyncHandler(async (req, res) => {
   const specialId = req.params.id;
-  const specialProject = await jobServices.getSpecialByIdService(specialId);
+  const specialProject = await specialProjectServices.getSpecialByIdService(specialId);
   sendResponse(res,{
            statusCode : 200,
            success : true,

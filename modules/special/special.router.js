@@ -28,7 +28,4 @@ specialRouter.get('/search/specials',authentication('ADMIN'),specialProjectContr
 
 
 
-// specialRouter.delete('/:id',authentication('CLIENT','ADMIN'),taskControllers.deleteTaskController);
-// specialRouter.put('/:id',authentication('CLIENT'),);
-
 export default specialRouter;

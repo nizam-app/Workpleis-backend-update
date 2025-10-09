@@ -1,11 +1,8 @@
 import { uploadBufferToCloudinary } from "../../utils/uploadImages.js";
 import { Special } from "./special.model.js";
 
-
-
 // Create special project
 const createSpecialService = async (payload, userId,files) => {
-  
   const uploadResults = await Promise.all(
      files.map(file => uploadBufferToCloudinary(file.buffer, "photos"))
   );
@@ -16,7 +13,6 @@ const createSpecialService = async (payload, userId,files) => {
   const specialProject = await Special.create({ ...payload, photos : urls, createdBy: userId });
   return specialProject;
 }
-
 
 // Get all special project (admin)
 const getAllSpecialService = async (queries) => {
