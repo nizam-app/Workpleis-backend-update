@@ -8,6 +8,7 @@ import reviewRouter from "../modules/review/review.router.js";
 import specialRouter from "../modules/special/special.router.js";
 import proposalRouter from "../modules/proposal/proposal.router.js";
 import deliveryRouter from "../modules/job_delivery/delivery.router.js";
+import specialDeliveryRouter from "../modules/special_delivery/delivery.router.js";
 
 export const router  = Router();
 
@@ -42,8 +43,12 @@ const routes = [
         route : proposalRouter
     },
     {
-        path : '/delivery',
+        path : '/job-delivery',
         route : deliveryRouter
+    },
+    {
+        path : '/special-project-delivery',
+        route : specialDeliveryRouter
     },
 ]
 
