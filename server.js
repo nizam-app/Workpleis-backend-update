@@ -5,7 +5,9 @@ import { Server } from "socket.io";
 import http from 'http';
 import socketConnection from "./socket/index.js";
 
-let host = "103.208.183.248"
+// let host = "103.208.183.248"
+let host = "103.208.183.250"
+
 
 let server;
 
@@ -20,20 +22,19 @@ const io = new Server(socketServer, {
 
 socketConnection(io);
 
-
 const initServer = async()=>{
     try {
         await mongoose.connect(envLoader.MONGODB_URL);
         server = socketServer.listen(envLoader.PORT, host, ()=>{
-            console.log(`Server is running at ${envLoader.PORT}`)
+            console.log(`Server is running at ${host}:${envLoader.PORT}`)
         })
     } catch (error) {
         console.log(error)
     }
-} 
+}
 
 initServer();
-
+// Handle unhandled promise rejections and uncaught exceptions
 process.on("unhandledRejection",(err)=>{
     console.log('unhandledRejection',err);
 
@@ -45,7 +46,7 @@ process.on("unhandledRejection",(err)=>{
     process.exit(1);
 })
 
-
+// Handle uncaught exceptions
 process.on("uncaughtException",(err)=>{
     console.log('uncaughtException', err);
 
@@ -56,7 +57,7 @@ process.on("uncaughtException",(err)=>{
     }
     process.exit(1);
 })
-
+// Handle SIGTERM and SIGINT for graceful shutdown
 process.on('SIGTERM',()=>{
     console.log('SIGTERM error');
 
