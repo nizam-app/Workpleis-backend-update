@@ -13,6 +13,7 @@ export const globalErrorHandle = (err  , req , res , next)=>{
         message = err.message;
     }
 
+    
     res.status(statusCode).json({
         status : 'Failed',
         message,
