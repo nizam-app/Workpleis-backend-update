@@ -33,8 +33,25 @@ const jobDeliveryNeedsModificationController = asyncHandler(async (req, res) => 
 });
 
 
+// job delivered controller
+const jobDeliveredController = asyncHandler(async (req, res) => {
+    const deliveryId = req.params.id;
+    const clientId =  req.user.id;
+   
+    await jobDeliveryServices.jobDeliveredService(deliveryId,clientId);
+
+  sendResponse(res,{
+           statusCode : 200,
+           success : true,
+           message : 'Job Delivered',
+           data: null
+       });
+});
+
+
 export const jobDeliveryControllers ={
     jobDeliveryController,
-    jobDeliveryNeedsModificationController
+    jobDeliveryNeedsModificationController,
+    jobDeliveredController
 }
 

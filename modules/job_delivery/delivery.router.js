@@ -9,9 +9,11 @@ const deliveryRouter = Router();
 deliveryRouter.post('/:id', upload.array("files", 5),authentication('SERVICE_PROVIDER'),jobDeliveryControllers.jobDeliveryController);
 
 // needsModification 
-deliveryRouter.post('/needs-modification/hello',(req,res)=>{
-    console.log(req);
-});
+deliveryRouter.post('/needs-modification/:id',authentication("CLIENT"),jobDeliveryControllers.jobDeliveryNeedsModificationController);
+
+
+// needsModification 
+deliveryRouter.post('/delivered/:id',authentication("CLIENT"),jobDeliveryControllers.jobDeliveredController);
 
 
 

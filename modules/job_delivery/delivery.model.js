@@ -24,15 +24,15 @@ const jobDeliverSchema = new mongoose.Schema(
     },
     message: {
       type: String,
-      required: true,
       trim : true
     },
     files: {
       type:  [deliveryFile]
     },
     isDelivered : {
-      type : Boolean,
-      default : true
+      type : String,
+      enum : ["Pending","Needs_Modification","Delivered"],
+      default : "Pending"
     },
     modificationMessage : {
       type : String
