@@ -40,7 +40,6 @@ const getTopServiceProvidersService = async () => {
 
 // account overview
 const accountOverViewService = async (userId) => {
-   
      const totalJobs = await Job.find({
         createdBy : userId
      }).countDocuments();

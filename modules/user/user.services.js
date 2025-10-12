@@ -3,8 +3,6 @@ import { envLoader } from "../../config/envs.js";
 import AppError from "../../utils/appError.js";
 import User from "./user.model.js";
 import { generateVerificationCodeAndExpires } from '../../utils/generateCodeExpires.js';
-import cloudinary from '../../config/cloudinary.config.js';
-import streamifier from "streamifier";
 import { uploadBufferToCloudinary } from '../../utils/uploadImages.js';
 
 // create user and email verification
@@ -163,31 +161,20 @@ const createUserSetPasswordService=async(payload)=>{
 
 
 
-// const createUserService =async(payload)=>{
-//     const {email,password,...rest}= payload;
-
-//     const isUserExist = await User.findOne({email});
-
-//     if(isUserExist){ 
-//         throw new AppError(401,"User Already Exist.");
-//     }
-
-//     const hashPassword = await bcrypt.hash(password,Number(envLoader.BCRYPT_SALT));
-
-//     const user = await User.create({
-//             email,
-//             password : hashPassword,
-//             ...rest
-//         });
-
-//     return user;
-// }
 
 
-// const userProfileDetailsService = async(userId)=>{
-//     const profileDetails = await User.findById(userId).select('-password').populate('address');
-//     return profileDetails;
-// }
+
+const userProfileUpdateService = async(userId,payload)=>{
+    const {name,profile,designation,address,bio} = payload;
+    const updateUser = await User.findByIdAndUpdate(userId,{
+        name,profile,designation,address,bio
+    },{new : true, runValidators : true});
+    
+    const user = updateUser.toObject();
+    delete user.password;
+
+    return user;
+}
 
 
 export const userServices = {
@@ -196,5 +183,6 @@ export const userServices = {
     createUserWithPhoneService,
     createUserWithPhoneVerificationService,
     createUserWithIdentityVerificationService,
-    createUserSetPasswordService
+    createUserSetPasswordService,
+    userProfileUpdateService
 }
