@@ -1,25 +1,50 @@
 import { asyncHandler } from "../../utils/asyncHandler.js";
 import { sendResponse } from "../../utils/sendResponse.js";
-import Task from "../task/task.model.js";
-import User from "../user/user.model.js";
+import { appServices } from "./app.services.js";
 
-const appStatsController = asyncHandler(async(req,res)=>{
-    const totolTasks = await Task.countDocuments();
-    const totalUser = await User.countDocuments();
-    const data = {users : totalUser, tasks : totolTasks};
+
+
+// get category name with total jobs
+const getCategoriesController = asyncHandler(async(req,res)=>{
+
+    const categories = await appServices.getCategoriesService();
     sendResponse(res,{
             statusCode : 200,
             success : true,
-            message : 'Retrived app stats',
-            data : data
+            message : 'Gategories Retrived',
+            data : categories
         });
-})
+});
 
 
+// get top sevice provider 
+const getTopServiceProvidersController = asyncHandler(async(req,res)=>{
 
+    const categories = await appServices.getTopServiceProvidersService();
+    sendResponse(res,{
+            statusCode : 200,
+            success : true,
+            message : 'Gategories Retrived',
+            data : categories
+        });
+});
 
+// get account overview 
+const getAccountOverviewController = asyncHandler(async(req,res)=>{
+    const userId = req.user.id;
+    const overview = await appServices.accountOverViewService(userId);
+    sendResponse(res,{
+            statusCode : 200,
+            success : true,
+            message : 'Account Overview Retrived',
+            data : overview
+        });
+});
 
 
 export const appControllers ={
-    appStatsController
+    getCategoriesController,
+    getTopServiceProvidersController,
+    getAccountOverviewController
 }
+

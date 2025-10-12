@@ -32,6 +32,9 @@ const userSchema = new mongoose.Schema(
       enum: ["INDIVIDUAL", "BUSINESS"],
       default: "INDIVIDUAL",
     },
+    designation : {
+      type : String
+    },
     address: {
       type: String
     },
