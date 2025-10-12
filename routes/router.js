@@ -9,6 +9,7 @@ import specialRouter from "../modules/special/special.router.js";
 import proposalRouter from "../modules/proposal/proposal.router.js";
 import deliveryRouter from "../modules/job_delivery/delivery.router.js";
 import specialDeliveryRouter from "../modules/special_delivery/delivery.router.js";
+import bankAccountRouter from "../modules/bankAccount/bank.router.js";
 
 export const router  = Router();
 
@@ -49,6 +50,10 @@ const routes = [
     {
         path : '/special-project-delivery',
         route : specialDeliveryRouter
+    },
+    {
+        path : '/bank-account',
+        route : bankAccountRouter
     },
 ]
 
