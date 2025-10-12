@@ -1,5 +1,15 @@
 import mongoose from "mongoose";
 
+
+const addressSchema = new mongoose.Schema({
+  country : {
+    type : String
+  },
+  city : {
+    type : String
+  }
+},{timestamps : false,versionKey : false, _id : false});
+
 const userSchema = new mongoose.Schema(
   {
     name: {
@@ -36,7 +46,7 @@ const userSchema = new mongoose.Schema(
       type : String
     },
     address: {
-      type: String
+      type: addressSchema
     },
     phoneNumber: {
       type: String,
