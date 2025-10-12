@@ -90,17 +90,30 @@ const createUserSetPasswordController = asyncHandler(async(req , res)=>{
     });
 });
 
-
-const userProfileUpdateController =asyncHandler(async(req,res)=>{
+// user update 
+const userUpdateController =asyncHandler(async(req,res)=>{
     const userId = req.user.id;
-    const data = await userServices.userProfileUpdateService(userId,req.body);
+    const data = await userServices.userUpdateService(userId,req.body);
      sendResponse(res,{
         statusCode : 200,
         success : true,
         message : 'User profile updated',
         data  
     });
-})
+});
+
+// user profile picture update
+const profilePictureUpdateController =asyncHandler(async(req,res)=>{
+    const userId = req.user.id;
+
+    const data = await userServices.profilePictureUpdateService(userId,req.file);
+     sendResponse(res,{
+        statusCode : 200,
+        success : true,
+        message : 'User profile picture updated',
+        data  
+    });
+});
 
  
 
@@ -112,5 +125,6 @@ export const userControllers = {
     createUserWithPhoneVerificationController,
     createUserIdentityVerificationController,
     createUserSetPasswordController,
-    userProfileUpdateController
+    userUpdateController,
+    profilePictureUpdateController
 } 

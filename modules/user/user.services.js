@@ -163,17 +163,28 @@ const createUserSetPasswordService=async(payload)=>{
 
 
 
-
-const userProfileUpdateService = async(userId,payload)=>{
-    const {name,profile,designation,address,bio} = payload;
+// user update service 
+const userUpdateService = async(userId,payload)=>{
+    const {name,designation,address,bio,languages} = payload;
     const updateUser = await User.findByIdAndUpdate(userId,{
-        name,profile,designation,address,bio
+        name,designation,address,bio,languages
     },{new : true, runValidators : true});
     
     const user = updateUser.toObject();
     delete user.password;
 
     return user;
+}
+const profilePictureUpdateService = async(userId,file)=>{
+    
+    const uploadResult =await uploadBufferToCloudinary(file.buffer, "picture")
+     
+    const updateUser = await User.findByIdAndUpdate(userId,{
+        profile : uploadResult.secure_url
+    },{new : true, runValidators : true});
+    
+
+    return updateUser?.profile;
 }
 
 
@@ -184,5 +195,6 @@ export const userServices = {
     createUserWithPhoneVerificationService,
     createUserWithIdentityVerificationService,
     createUserSetPasswordService,
-    userProfileUpdateService
+    userUpdateService,
+    profilePictureUpdateService
 }

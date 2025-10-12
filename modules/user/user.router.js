@@ -23,8 +23,14 @@ userRouter.post('/signup/identity-verification',upload.array('images'),userContr
 // set password and address
 userRouter.post('/signup/set-password',userControllers.createUserSetPasswordController);
 
-// user profile update 
-userRouter.patch('/profile-update',authentication('CLIENT','JOB_SEEKER','ADMIN'),userControllers.userProfileUpdateController);
+// user update 
+userRouter.patch('/update',authentication('CLIENT','JOB_SEEKER','ADMIN'),
+userControllers.userUpdateController);
+
+// user profile picture update 
+userRouter.patch('/profile-picture',upload.single('image'),
+authentication('CLIENT','JOB_SEEKER','ADMIN'),
+userControllers.profilePictureUpdateController);
 
 
 

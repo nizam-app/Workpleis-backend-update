@@ -55,6 +55,9 @@ const userSchema = new mongoose.Schema(
       type: String,
       maxlength: 500,
     },
+    languages : {
+      type : [String]
+    },
     ratings: {
       type: Number,
       min: 0,
