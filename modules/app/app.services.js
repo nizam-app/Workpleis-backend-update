@@ -38,7 +38,7 @@ const getTopServiceProvidersService = async () => {
 }
 
 
-// account overview
+// account overview(client)
 const accountOverViewService = async (userId) => {
      const totalJobs = await Job.find({
         createdBy : userId
@@ -47,6 +47,31 @@ const accountOverViewService = async (userId) => {
         createdBy : userId,
         status : {$ne : "Delivered"}
      }).countDocuments();
+
+    return {
+        totalJobs,
+        pendingJobs
+    };
+}
+
+// get profile details
+const getProfileDetailsService = async (userId) => {
+     const totalJobs = await Job.find({
+        createdBy : userId
+     }).countDocuments();
+     
+     const pendingJobs = await Job.find({
+        createdBy : userId,
+        status : {$ne : "Delivered"}
+     }).countDocuments();
+
+
+     const profile = await User.findById(userId);
+
+     
+
+
+     
 
     return {
         totalJobs,
