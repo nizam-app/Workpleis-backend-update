@@ -24,12 +24,12 @@ userRouter.post('/signup/identity-verification',upload.array('images'),userContr
 userRouter.post('/signup/set-password',userControllers.createUserSetPasswordController);
 
 // user update 
-userRouter.patch('/update',authentication('CLIENT','JOB_SEEKER','ADMIN'),
+userRouter.patch('/update',authentication('CLIENT','SERVICE_PROVIDER','ADMIN'),
 userControllers.userUpdateController);
 
 // user profile picture update 
 userRouter.patch('/profile-picture',upload.single('image'),
-authentication('CLIENT','JOB_SEEKER','ADMIN'),
+authentication('CLIENT','SERVICE_PROVIDER','ADMIN'),
 userControllers.profilePictureUpdateController);
 
 

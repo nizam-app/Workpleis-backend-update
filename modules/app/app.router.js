@@ -18,6 +18,10 @@ appRouter.get('/profile/details/:id',
     authentication('CLIENT','SERVICE_PROVIDER','ADMIN'),
     appControllers.getProfileDetailsPublicController);
 
+appRouter.get('/profile/ratings-reviews/:id',
+    authentication('CLIENT','SERVICE_PROVIDER','ADMIN'),
+    appControllers.getRatingsAndReviewsController);
+
 
 
 export default appRouter;

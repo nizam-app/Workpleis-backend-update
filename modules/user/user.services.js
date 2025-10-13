@@ -4,6 +4,7 @@ import AppError from "../../utils/appError.js";
 import User from "./user.model.js";
 import { generateVerificationCodeAndExpires } from '../../utils/generateCodeExpires.js';
 import { uploadBufferToCloudinary } from '../../utils/uploadImages.js';
+import { generateNameFromEmail } from '../../utils/generateNameFromEmail.js';
 
 // create user and email verification
 const createUserWithEmailService =async(payload)=>{
@@ -31,6 +32,7 @@ const createUserWithEmailService =async(payload)=>{
             email,
             role,
             subRole,
+            name : generateNameFromEmail(email),
             emailVerificationCode : code,
             emailVerificationExpires : expiresAt
         });

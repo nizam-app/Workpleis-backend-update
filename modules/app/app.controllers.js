@@ -53,11 +53,37 @@ const getProfileDetailsPublicController = asyncHandler(async(req,res)=>{
         });
 });
 
+// get ratings and reviews
+const getRatingsAndReviewsController = asyncHandler(async(req,res)=>{
+    const userId = req.params.id;
+    const details = await appServices.getRatingsAndReviewsService(userId);
+    sendResponse(res,{
+            statusCode : 200,
+            success : true,
+            message : 'Profile deitails Retrived',
+            data : details
+        });
+});
+
+
+// contact with admin
+const contactController = asyncHandler(async(req,res)=>{
+    const userId = req.user.id;
+    await appServices.contactService(userId,req.body);
+    sendResponse(res,{
+            statusCode : 200,
+            success : true,
+            message : 'Sent message',
+            data : null
+        });
+});
+
 
 export const appControllers ={
     getCategoriesController,
     getTopServiceProvidersController,
     getAccountOverviewController,
-    getProfileDetailsPublicController
+    getProfileDetailsPublicController,
+    getRatingsAndReviewsController
 }
 

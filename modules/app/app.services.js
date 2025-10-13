@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import Job from "../job/job.model.js";
 import Review from "../review/review.model.js";
 import User from "../user/user.model.js";
@@ -41,13 +42,34 @@ const getTopServiceProvidersService = async () => {
 
 // account overview(client)
 const accountOverViewService = async (userId) => {
-     const totalJobs = await Job.find({
+
+   const user = await User.findById(userId);
+  
+  let totalJobs;
+  let pendingJobs;
+
+   if(user.role === 'SERVICE_PROVIDER'){
+       totalJobs = await Job.find({
+        assignedTo : userId
+     }).countDocuments();
+      pendingJobs = await Job.find({
+        assignedTo : userId,
+        status : {$ne : "Delivered"}
+     }).countDocuments();
+    }
+
+   if(user.role === 'CLIENT'){
+       totalJobs = await Job.find({
         createdBy : userId
      }).countDocuments();
-     const pendingJobs = await Job.find({
+      pendingJobs = await Job.find({
         createdBy : userId,
         status : {$ne : "Delivered"}
      }).countDocuments();
+    }
+
+
+     
 
     return {
         totalJobs,
@@ -77,6 +99,52 @@ const getProfileDetailsPublicService = async (userId) => {
     };
 }
 
+// get rating and reviews
+const getRatingsAndReviewsService = async (userId) => {
+    const reviewStats = await Review.aggregate([
+  {
+    $match: { to: new mongoose.Types.ObjectId(String(userId)) },
+  },
+  {
+    $group: {
+      _id: "$to",
+      totalReviews: { $sum: 1 },
+      averageRating: { $avg: "$rating" },
+      ratings: { $push: "$rating" },
+    },
+  },
+  {
+    $project: {
+      _id: 0,
+      totalReviews: 1,
+      averageRating: { $round: ["$averageRating", 1] },
+      ratingCounts: {
+        1: { $size: { $filter: { input: "$ratings", as: "r", cond: { $eq: ["$$r", 1] } } } },
+        2: { $size: { $filter: { input: "$ratings", as: "r", cond: { $eq: ["$$r", 2] } } } },
+        3: { $size: { $filter: { input: "$ratings", as: "r", cond: { $eq: ["$$r", 3] } } } },
+        4: { $size: { $filter: { input: "$ratings", as: "r", cond: { $eq: ["$$r", 4] } } } },
+        5: { $size: { $filter: { input: "$ratings", as: "r", cond: { $eq: ["$$r", 5] } } } },
+      },
+    },
+  },
+]);
+
+const allReviews = await Review.find({ to: userId })
+  .populate("from", "name profile")
+  .sort({ createdAt: -1 });  
+
+  return{
+    reviewStats,
+    allReviews
+  }
+}
+
+// contact with admin
+const contactService = async (userId,payload) => {
+  const {category, subject, message} = payload;
+  // here the message will send to the admin email 
+}
+
 
 
 
@@ -84,5 +152,7 @@ export const appServices = {
     getCategoriesService,
     getTopServiceProvidersService,
     accountOverViewService,
-    getProfileDetailsPublicService
+    getProfileDetailsPublicService,
+    getRatingsAndReviewsService,
+    contactService
 }
