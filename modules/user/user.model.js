@@ -53,7 +53,7 @@ const userSchema = new mongoose.Schema(
     },
     bio: {
       type: String,
-      maxlength: 500,
+      maxlength: 1000,
     },
     languages : {
       type : [String]
@@ -64,9 +64,9 @@ const userSchema = new mongoose.Schema(
       max: 5,
       default: 0,
     },
-isDeleted: {
-      type: Boolean,
-      default: false,
+    isDeleted: {
+          type: Boolean,
+          default: false,
     },
     isActive: {
       type: String,

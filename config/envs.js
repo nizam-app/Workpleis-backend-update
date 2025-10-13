@@ -14,7 +14,7 @@ const envsLoading = ()  =>{
         
         if(!process.env[key]){
             throw new Error (`Missing env variable ${key}`)
-        } 
+        }
      })
     
      return {
