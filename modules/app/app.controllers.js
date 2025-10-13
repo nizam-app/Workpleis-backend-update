@@ -43,13 +43,13 @@ const getAccountOverviewController = asyncHandler(async(req,res)=>{
 
 // get account overview(client) 
 const getProfileDetailsPublicController = asyncHandler(async(req,res)=>{
-    const userId = req.user.id;
-    const overview = await appServices.accountOverViewService(userId);
+    const userId = req.params.id;
+    const details = await appServices.getProfileDetailsPublicService(userId);
     sendResponse(res,{
             statusCode : 200,
             success : true,
-            message : 'Account Overview Retrived',
-            data : overview
+            message : 'Profile deitails Retrived',
+            data : details
         });
 });
 
@@ -57,6 +57,7 @@ const getProfileDetailsPublicController = asyncHandler(async(req,res)=>{
 export const appControllers ={
     getCategoriesController,
     getTopServiceProvidersController,
-    getAccountOverviewController
+    getAccountOverviewController,
+    getProfileDetailsPublicController
 }
 

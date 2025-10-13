@@ -1,4 +1,5 @@
 import Job from "../job/job.model.js";
+import Review from "../review/review.model.js";
 import User from "../user/user.model.js";
 
 // get categories
@@ -55,27 +56,24 @@ const accountOverViewService = async (userId) => {
 }
 
 // get profile details
-const getProfileDetailsService = async (userId) => {
-     const totalJobs = await Job.find({
-        createdBy : userId
-     }).countDocuments();
+const getProfileDetailsPublicService = async (userId) => {
+
+    const {totalJobs,pendingJobs} = await accountOverViewService(userId);
      
-     const pendingJobs = await Job.find({
-        createdBy : userId,
-        status : {$ne : "Delivered"}
-     }).countDocuments();
-
-
-     const profile = await User.findById(userId);
-
-     
-
-
-     
-
+    const profile = await User.findById(userId);
+    const totalReview = await Review.find({to : userId}).countDocuments();
     return {
         totalJobs,
-        pendingJobs
+        pendingJobs,
+        picture : profile.profile,
+        totalReview,
+        ratings : profile.ratings,
+        bio : profile.bio,
+        about : {
+          location : profile.address,
+          languages : profile.languages,
+          memberSince : profile.createdAt
+        }
     };
 }
 
@@ -85,5 +83,6 @@ const getProfileDetailsService = async (userId) => {
 export const appServices = {
     getCategoriesService,
     getTopServiceProvidersService,
-    accountOverViewService
+    accountOverViewService,
+    getProfileDetailsPublicService
 }
