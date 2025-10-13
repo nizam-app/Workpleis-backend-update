@@ -84,6 +84,7 @@ export const appControllers ={
     getTopServiceProvidersController,
     getAccountOverviewController,
     getProfileDetailsPublicController,
-    getRatingsAndReviewsController
+    getRatingsAndReviewsController,
+    contactController
 }
 

@@ -18,9 +18,15 @@ appRouter.get('/profile/details/:id',
     authentication('CLIENT','SERVICE_PROVIDER','ADMIN'),
     appControllers.getProfileDetailsPublicController);
 
+// get ratings and reviews
 appRouter.get('/profile/ratings-reviews/:id',
     authentication('CLIENT','SERVICE_PROVIDER','ADMIN'),
     appControllers.getRatingsAndReviewsController);
+
+// contact with admin by email 
+appRouter.post('/contact',
+    authentication('CLIENT','SERVICE_PROVIDER'),
+    appControllers.contactController);
 
 
 

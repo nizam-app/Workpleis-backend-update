@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 import Job from "../job/job.model.js";
 import Review from "../review/review.model.js";
 import User from "../user/user.model.js";
-
+ 
 // get categories
 const getCategoriesService = async () => {
    
@@ -142,7 +142,13 @@ const allReviews = await Review.find({ to: userId })
 // contact with admin
 const contactService = async (userId,payload) => {
   const {category, subject, message} = payload;
+  
+  const user = await User.findById(userId);
+  
   // here the message will send to the admin email 
+  const email = user.email;// here is the email 
+
+  console.log(category, subject, message);
 }
 
 
