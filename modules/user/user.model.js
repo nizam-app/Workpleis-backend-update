@@ -1,5 +1,15 @@
 import mongoose from "mongoose";
 
+
+const addressSchema = new mongoose.Schema({
+  country : {
+    type : String
+  },
+  city : {
+    type : String
+  }
+},{timestamps : false,versionKey : false, _id : false});
+
 const userSchema = new mongoose.Schema(
   {
     name: {
@@ -32,8 +42,11 @@ const userSchema = new mongoose.Schema(
       enum: ["INDIVIDUAL", "BUSINESS"],
       default: "INDIVIDUAL",
     },
+    designation : {
+      type : String
+    },
     address: {
-      type: String
+      type: addressSchema
     },
     phoneNumber: {
       type: String,
@@ -41,6 +54,9 @@ const userSchema = new mongoose.Schema(
     bio: {
       type: String,
       maxlength: 1000,
+    },
+    languages : {
+      type : [String]
     },
     ratings: {
       type: Number,

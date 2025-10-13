@@ -30,14 +30,14 @@ const socketConnection = (io) => {
         // Save membership in socket session
             socket.conversations = socket.conversations || {};
             socket.conversations[conversationId] = {
-                client: String(conv.client),
-                jobSeeker: String(conv.jobSeeker)
+                client: String(c.client),
+                serviceProvider: String(c.serviceProvider)
             };
 
         socket.join(conversationId);
         socket.emit("conversation:joined", { conversationId });
       } catch {
-        socket.emit("error", { message: "Join failed" });
+        socket.emit("error", { message: "Conversation joining failed" });
       }
     });
 
@@ -45,7 +45,8 @@ const socketConnection = (io) => {
     socket.on("message:send", async (payload, ack) => {
       try {
         const { conversationId, content, mediaUrl } = payload || {};
-        const msg = await messageServices.createMessageService({ conversationId,userId, content, mediaUrl });
+        const msg = await messageServices.createMessageService(
+          { conversationId,userId, content, mediaUrl });
         
         // emit to both participants in the room
         io.to(conversationId).emit("message:new", msg);
@@ -72,6 +73,7 @@ const socketConnection = (io) => {
     });
 
   });
+
 };
 
 

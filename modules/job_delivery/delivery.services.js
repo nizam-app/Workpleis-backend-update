@@ -25,7 +25,7 @@ const jobDeliveryService = async (offerId,serviceProviderId,payload,files) => {
       throw new AppError(401,"You are not authorized to delivery");
     }
 
-    if(job.status !== 'In_progress' ){
+    if(job.status !== 'In_progress' && job.status !== 'In_review'){
       throw new AppError(401,`Job status is ${job.status}`);
     }
 
@@ -55,7 +55,6 @@ const jobDeliveryService = async (offerId,serviceProviderId,payload,files) => {
 
 };
 
-
 // delivery needsModification service 
 const jobDeliveryNeedsModificationService = async (deliveryId,clientId,payload) => {
     const {message} = payload;
@@ -76,13 +75,49 @@ const jobDeliveryNeedsModificationService = async (deliveryId,clientId,payload) 
       throw new AppError(401,"You are not authorized to needs modification");
     }
 
-    delivery.isDelivered = false;
+    if(job.status !== 'In_review'){
+      throw new AppError(401,`Job status is ${job.status}`);
+    }
+
+    delivery.isDelivered = "Needs_Modification";
     delivery.modificationMessage = message;
+    await delivery.save();
+};
+
+// delivered service 
+const jobDeliveredService = async (deliveryId,clientId) => {
+     
+     const delivery = await JobDelivery.findById(deliveryId).populate('job'); 
+
+     if(!delivery){
+      throw new AppError(404, "Delivery not found");
+     }
+
+     if(delivery.isDelivered !== "Pending"){
+      throw new AppError(404, `Delivery status ${delivery.isDelivered}`);
+     }
+
+     const  job = await Job.findById(delivery.job._id);
+
+     if(!job){
+      throw new AppError(404,"Job not found");
+     }
+     console.log(String(job.createdBy),String(clientId));
+     if(String(job.createdBy) !== String(clientId)){
+      throw new AppError(401,"You are not authorized to needs modification");
+    }
+
+    if(job.status !== 'In_review'){
+      throw new AppError(401,`Job status is ${job.status}`);
+    }
+
+    delivery.isDelivered = "Delivered";
     await delivery.save();
 };
 
 
 export const jobDeliveryServices = {
     jobDeliveryService,
-    jobDeliveryNeedsModificationService
+    jobDeliveryNeedsModificationService,
+    jobDeliveredService
 } 

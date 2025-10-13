@@ -1,10 +1,32 @@
-import {Router} from 'express';
+import {Router} from 'express'; 
 import { appControllers } from './app.controllers.js';
+import { authentication } from '../../middlewares/authentication.middleware.js';
 const appRouter = Router();
 
 
+// get categories 
+appRouter.get('/categories',authentication('CLIENT','SERVICE_PROVIDER','ADMIN'),appControllers.getCategoriesController);
 
-appRouter.get('/stats',appControllers.appStatsController);
+// get top service provider
+appRouter.get('/top-service-providers',authentication('CLIENT','ADMIN'),appControllers.getTopServiceProvidersController);
+
+// get client account overview 
+appRouter.get('/client/account-overview',authentication('CLIENT'),appControllers.getAccountOverviewController);
+
+// get profile details (public)
+appRouter.get('/profile/details/:id',
+    authentication('CLIENT','SERVICE_PROVIDER','ADMIN'),
+    appControllers.getProfileDetailsPublicController);
+
+// get ratings and reviews
+appRouter.get('/profile/ratings-reviews/:id',
+    authentication('CLIENT','SERVICE_PROVIDER','ADMIN'),
+    appControllers.getRatingsAndReviewsController);
+
+// contact with admin by email 
+appRouter.post('/contact',
+    authentication('CLIENT','SERVICE_PROVIDER'),
+    appControllers.contactController);
 
 
 

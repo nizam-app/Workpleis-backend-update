@@ -90,29 +90,30 @@ const createUserSetPasswordController = asyncHandler(async(req , res)=>{
     });
 });
 
+// user update 
+const userUpdateController =asyncHandler(async(req,res)=>{
+    const userId = req.user.id;
+    const data = await userServices.userUpdateService(userId,req.body);
+     sendResponse(res,{
+        statusCode : 200,
+        success : true,
+        message : 'User profile updated',
+        data  
+    });
+});
 
-// const createUserController = asyncHandler(async(req , res)=>{
-//     const user = await userServices.createUserService(req.body);
+// user profile picture update
+const profilePictureUpdateController =asyncHandler(async(req,res)=>{
+    const userId = req.user.id;
 
-//     sendResponse(res,{
-//         statusCode : 201,
-//         success : true,
-//         message : 'User created',
-//         data : {name : user.name, email : user.email} 
-//     });
-// });
-
-
-// const userProfileDetailsController =asyncHandler(async(req,res)=>{
-//     const userId = req.user.id;
-//     const data = await userServices.userProfileDetailsService(userId);
-//      sendResponse(res,{
-//         statusCode : 200,
-//         success : true,
-//         message : 'User profile data retrived',
-//         data  
-//     });
-// })
+    const data = await userServices.profilePictureUpdateService(userId,req.file);
+     sendResponse(res,{
+        statusCode : 200,
+        success : true,
+        message : 'User profile picture updated',
+        data  
+    });
+});
 
  
 
@@ -123,5 +124,7 @@ export const userControllers = {
     createUserWithPhoneController,
     createUserWithPhoneVerificationController,
     createUserIdentityVerificationController,
-    createUserSetPasswordController
+    createUserSetPasswordController,
+    userUpdateController,
+    profilePictureUpdateController
 } 

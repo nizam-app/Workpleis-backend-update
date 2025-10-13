@@ -1,7 +1,5 @@
 import mongoose from "mongoose";
 
-
-
 export const deliveryFile = new mongoose.Schema({
   url: String,
   format: String,
@@ -10,16 +8,16 @@ export const deliveryFile = new mongoose.Schema({
 },{timestamps : false, versionKey : false, _id : false})
 
 
-const jobDeliverSchema = new mongoose.Schema(
+const specialDeliverSchema = new mongoose.Schema(
   {
-    job: {
+    special: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Job",
+      ref: "Special",
       required: true,
     },
-    offer: {
+    proposal: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Offer",
+      ref: "Proposal",
       required: true,
     },
     message: {
@@ -41,8 +39,8 @@ const jobDeliverSchema = new mongoose.Schema(
   { timestamps: true, versionKey: false }
 );
 
-const JobDelivery = mongoose.model("JobDelivery", jobDeliverSchema);
+const SpecialDelivery = mongoose.model("SpecialDelivery", specialDeliverSchema);
 
-export default JobDelivery;
+export default SpecialDelivery;
 
 

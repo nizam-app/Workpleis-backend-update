@@ -30,10 +30,14 @@ const createReviewService = async (jobId,from,payload) => {
   if (existingReview) {
     throw new AppError(400, "You have already submitted a review for this job");
   }
+  
+  if(!job.assignedTo){
+    throw new AppError(404, "Job Seeker is not found");
+  }
 
   let to; 
 
-  if(from === job.createdBy){
+  if(String(from) === String(job.createdBy)){
     to = String(job.assignedTo)
   }else{
     to = String(job.createdBy)

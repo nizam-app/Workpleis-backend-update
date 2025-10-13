@@ -3,9 +3,8 @@ import { envLoader } from "../../config/envs.js";
 import AppError from "../../utils/appError.js";
 import User from "./user.model.js";
 import { generateVerificationCodeAndExpires } from '../../utils/generateCodeExpires.js';
-import cloudinary from '../../config/cloudinary.config.js';
-import streamifier from "streamifier";
 import { uploadBufferToCloudinary } from '../../utils/uploadImages.js';
+import { generateNameFromEmail } from '../../utils/generateNameFromEmail.js';
 
 // create user and email verification
 const createUserWithEmailService =async(payload)=>{
@@ -33,6 +32,7 @@ const createUserWithEmailService =async(payload)=>{
             email,
             role,
             subRole,
+            name : generateNameFromEmail(email),
             emailVerificationCode : code,
             emailVerificationExpires : expiresAt
         });
@@ -163,31 +163,31 @@ const createUserSetPasswordService=async(payload)=>{
 
 
 
-// const createUserService =async(payload)=>{
-//     const {email,password,...rest}= payload;
-
-//     const isUserExist = await User.findOne({email});
-
-//     if(isUserExist){ 
-//         throw new AppError(401,"User Already Exist.");
-//     }
-
-//     const hashPassword = await bcrypt.hash(password,Number(envLoader.BCRYPT_SALT));
-
-//     const user = await User.create({
-//             email,
-//             password : hashPassword,
-//             ...rest
-//         });
-
-//     return user;
-// }
 
 
-// const userProfileDetailsService = async(userId)=>{
-//     const profileDetails = await User.findById(userId).select('-password').populate('address');
-//     return profileDetails;
-// }
+// user update service 
+const userUpdateService = async(userId,payload)=>{
+    const {name,designation,address,bio,languages} = payload;
+    const updateUser = await User.findByIdAndUpdate(userId,{
+        name,designation,address,bio,languages
+    },{new : true, runValidators : true});
+    
+    const user = updateUser.toObject();
+    delete user.password;
+
+    return user;
+}
+const profilePictureUpdateService = async(userId,file)=>{
+    
+    const uploadResult =await uploadBufferToCloudinary(file.buffer, "picture")
+     
+    const updateUser = await User.findByIdAndUpdate(userId,{
+        profile : uploadResult.secure_url
+    },{new : true, runValidators : true});
+    
+
+    return updateUser?.profile;
+}
 
 
 export const userServices = {
@@ -196,5 +196,7 @@ export const userServices = {
     createUserWithPhoneService,
     createUserWithPhoneVerificationService,
     createUserWithIdentityVerificationService,
-    createUserSetPasswordService
+    createUserSetPasswordService,
+    userUpdateService,
+    profilePictureUpdateService
 }
