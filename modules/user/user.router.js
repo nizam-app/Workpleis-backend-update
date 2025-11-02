@@ -32,6 +32,10 @@ userRouter.patch('/profile-picture',upload.single('image'),
 authentication('CLIENT','SERVICE_PROVIDER','ADMIN'),
 userControllers.profilePictureUpdateController);
 
+// get requested users
+
+userRouter.get('/user-request', authentication('ADMIN'), userControllers.getRequestedUserController)
+
 
 
 export default userRouter;

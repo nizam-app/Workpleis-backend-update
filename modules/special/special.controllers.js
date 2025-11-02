@@ -43,7 +43,7 @@ const getSpecialDetailsController = asyncHandler(async (req, res) => {
            message : 'Special project retrived',
            data : specialProject
        });
-});
+}); 
 
 // Get my special projects
 const getSpecialsByClientController = asyncHandler(async (req, res) => {

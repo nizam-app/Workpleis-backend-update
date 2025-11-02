@@ -14,8 +14,6 @@ app.use(cors())
 
 app.use('/api/v1/',router);
 
-
-
  
 app.use(globalErrorHandle);
 

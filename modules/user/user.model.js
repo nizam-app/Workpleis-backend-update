@@ -35,7 +35,7 @@ const userSchema = new mongoose.Schema(
     role: {
       type: String,
       enum: ["CLIENT", "SERVICE_PROVIDER", "ADMIN"],
-      default: "SERVICE_PROVIDER",
+      default: "CLIENT",
     },
     subRole: {
       type: String,
@@ -84,7 +84,9 @@ const userSchema = new mongoose.Schema(
     identityDocs: {
        type : [String]
     },
-   
+    documents: {
+      type: String
+    },
 
     emailVerificationCode: {type : String},
     emailVerificationExpires: {type : Date},

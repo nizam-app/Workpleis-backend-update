@@ -127,10 +127,29 @@ const startedJobService = async (offerId,serviceProviderId) => {
 };
 
 
+// get signle offer with job details
+const getSignleOfferService = async (offerId,serviceProviderId) => {
+
+  // Find the offer
+  const offer = await Offer.findOne(
+    {
+      _id : offerId,
+      serviceProvider : serviceProviderId
+    }
+  ).populate("job");
+   
+  if (!offer) {
+    throw new AppError(404, "Offer not found");
+  }
+  return offer;
+};
+
+
 export const offerservices ={
     createOfferService,
     getOffersForJobService,
     acceptOfferService,
     rejectOfferService,
-    startedJobService
+    startedJobService,
+    getSignleOfferService
 }

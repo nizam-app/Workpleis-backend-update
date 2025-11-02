@@ -37,6 +37,8 @@ const createUserWithEmailService =async(payload)=>{
             emailVerificationExpires : expiresAt
         });
     }
+
+    // mail to user email address with the verification code
   
     return user;
 }
@@ -138,7 +140,7 @@ const createUserWithIdentityVerificationService=async(payload,files)=>{
     return urls;
 }
 
-const createUserSetPasswordService=async(payload)=>{
+const createUserSetPasswordService = async(payload) => {
     const {email,phone,password,address} = payload; 
     const isUserExist = await User.findOne({email, phoneNumber : phone});
     if(!isUserExist){
@@ -153,16 +155,13 @@ const createUserSetPasswordService=async(payload)=>{
         throw new AppError(401,"Phone is not verified");
     }
     
-    const hashPassword = await bcrypt.hash(password,Number(envLoader.BCRYPT_SALT));
+    const hashPassword = await bcrypt.hash(password, Number(envLoader.BCRYPT_SALT));
 
 
     isUserExist.address = address;
     isUserExist.password = hashPassword;
     await isUserExist.save();
 }
-
-
-
 
 
 // user update service 
@@ -190,6 +189,7 @@ const profilePictureUpdateService = async(userId,file)=>{
 }
 
 
+
 export const userServices = {
     createUserWithEmailService,
     createUserWithEmalVerificationService,
@@ -198,5 +198,6 @@ export const userServices = {
     createUserWithIdentityVerificationService,
     createUserSetPasswordService,
     userUpdateService,
-    profilePictureUpdateService
+    profilePictureUpdateService,
+    
 }

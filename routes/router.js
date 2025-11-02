@@ -11,6 +11,7 @@ import deliveryRouter from "../modules/job_delivery/delivery.router.js";
 import specialDeliveryRouter from "../modules/special_delivery/delivery.router.js";
 import bankAccountRouter from "../modules/bankAccount/bank.router.js";
 import appRouter from "../modules/app/app.router.js";
+import adminRouter  from "../modules/admin/admin.router.js"
 
 export const router  = Router();
 
@@ -60,6 +61,11 @@ const routes = [
         path : '/app',
         route : appRouter
     },
+    {
+        path: '/admin',
+        route :  adminRouter 
+    }
+
 
 ]
 

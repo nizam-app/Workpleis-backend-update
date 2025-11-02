@@ -80,10 +80,30 @@ const startedJobController = asyncHandler(async (req, res) => {
        });
 });
 
+
+// get signle offer with job details
+const getSignleOfferController = asyncHandler(async (req, res) => {
+  const offerId = req.params.id;
+  const serviceProviderId = req.user.id;
+ 
+  const offer = await offerservices.getSignleOfferService(offerId,serviceProviderId);
+  sendResponse(res,{
+           statusCode : 200,
+           success : true,
+           message : 'Offer retrived',
+           data: offer
+       });
+});
+
+
+
+
+
 export const offerControllers={
   createOfferController,
   getOffersForJobController,
   acceptOfferController,
   rejectOfferController,
-  startedJobController
+  startedJobController,
+  getSignleOfferController
 }

@@ -18,7 +18,7 @@ const specialSchema = new Schema({
     urgency: {
         type: String,
         enum: ["Immediate", "1-2 weeks", "Flexible"],
-        required: [true, 'Category is required'],
+        required: [true, 'Urgency is required'],
         trim : true
     },
     nda: {
@@ -69,4 +69,6 @@ const specialSchema = new Schema({
     versionKey: false
 });
 
-export const Special = model('Special', specialSchema);
+const Special = model('Special', specialSchema);
+
+export default Special;

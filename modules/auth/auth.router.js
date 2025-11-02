@@ -19,11 +19,6 @@ authRouter.put('/forgot-password',authControllers.forgotPasswordController);
 
 
 
-
-
-
-
-
 authRouter.post('/google/login',authControllers.googleLogincontroller);
 
 

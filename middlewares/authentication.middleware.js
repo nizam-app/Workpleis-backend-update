@@ -10,6 +10,8 @@ export const authentication = (...roles)=>async(req  ,res ,next )=>{
         if(!token) throw new AppError(404, "Token not found.");
         
         const verified = jwt.verify(token,envLoader.JWT_ACCESS_TOKEN_SECRET);
+
+        console.log("lala verified", verified);
       
         const isUserExist = await User.findOne({email : verified.email});
         if(!isUserExist){

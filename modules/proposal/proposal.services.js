@@ -1,5 +1,5 @@
 import AppError from "../../utils/appError.js";
-import { Special } from "../special/special.model.js";
+import Special from "../special/special.model.js";
 import Proposal from "./proposal.model.js";
 
 

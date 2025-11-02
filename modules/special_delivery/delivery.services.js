@@ -1,6 +1,6 @@
 import Proposal from '../proposal/proposal.model.js';
 import AppError from '../../utils/appError.js';
-import {Special} from '../special/special.model.js';
+import Special from '../special/special.model.js';
 import { uploadBufferToCloudinary } from '../../utils/uploadImages.js';
 import SpecialDelivery from './delivery.model.js';
 

@@ -39,6 +39,7 @@ const createJobController = asyncHandler(async (req, res) => {
 //        });
 // });
 
+
 // Get all jobs (admin)
 const getAllJobsController = asyncHandler(async (req, res) => {
      

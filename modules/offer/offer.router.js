@@ -24,6 +24,9 @@ offerRouter.post('/:id/rejected',authentication('CLIENT'),offerControllers.rejec
 // started job
 offerRouter.post('/:id/started',authentication('SERVICE_PROVIDER'),offerControllers.startedJobController);
 
+// get single offer with job details
+offerRouter.get('/:id/details',authentication('SERVICE_PROVIDER'),offerControllers.getSignleOfferController);
+
 
 
 

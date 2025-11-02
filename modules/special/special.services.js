@@ -1,5 +1,5 @@
 import { uploadBufferToCloudinary } from "../../utils/uploadImages.js";
-import { Special } from "./special.model.js";
+import Special from "./special.model.js";
 
 // Create special project
 const createSpecialService = async (payload, userId,files) => {
